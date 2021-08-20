@@ -1,20 +1,22 @@
-![Desktop CI](https://github.com/Infactum/addin-template/workflows/Desktop%20CI/badge.svg)
-![Mobile CI](https://github.com/Infactum/addin-template/workflows/Mobile%20CI/badge.svg)
-
-# Modern Native AddIn
-
-Custom implementation of Native AddIn template for 1C:Enterpise platform on modern C++.    
-See more info about AddIn development [here](https://support.1ci.com/hc/en-us/sections/360001651174-Add-in-Development-Technology).
-
-## Supported platforms
-
-✔ Windows  
-✔ Linux  
-⚠ MacOS (compiled but not tested)  
-✔ Android  
-❌ iOS  
-❌ Browser Extenstions
-
-## License exclusions
-
-In case of embedding add-in based on this template inside 1C:Enterprise configuations, external processors, configuration extensions etc, it's allowed not to apply AGPL terms to whole application part, but only add-in itself.
+ *  (c) Popeless
+ *  Added Image Magick lib and auto orient method
+ *  Delete all others methods
+ *  Libs in pragma comments, need to be in SampleAddIn.lib folder
+ *  (taken from image magick setup folder)
+ *  This lib needs to compile in Release mod
+ *
+ *  Big Thanx to Infactum for this template!
+ *
+ * https://github.com/Infactum/addin-template
+ * 
+ * ******************************************************************************
+ *  Redisigned for test Image Magick
+ *  Added libs (without them it didn't work
+ *  Added ifstream to test binary images (not completed)
+ *  
+ *  This code might compile without errors only in release mode. 
+ *  If you want to debug it correctly, you must compile all libs by yourself
+ *  Webpage for answer:
+ *  legacy.imagemagick.org/discourse-server/viewtopic.php?t=13970
+ *
+ * ******************************************************************************

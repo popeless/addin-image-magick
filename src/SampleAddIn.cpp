@@ -52,7 +52,13 @@ SampleAddIn::SampleAddIn() {
     
     AddMethod(L"Rotate", L"Повернуть", this, &SampleAddIn::pictureRotate);
 
+    AddMethod(L"Flip", L"ОтразитьПоВертикали", this, &SampleAddIn::pictureFlip);
+
+    AddMethod(L"Flop", L"ОтразитьПоГоризонтали", this, &SampleAddIn::pictureFlop);
+
     AddMethod(L"Enhance", L"Улучшить", this, &SampleAddIn::pictureEnhance);
+
+    AddMethod(L"Sharpen", L"Заострить", this, &SampleAddIn::pictureSharpen);
 
     AddMethod(L"Oil", L"Масло", this, &SampleAddIn::pictureOil);
 
@@ -92,6 +98,34 @@ std::string SampleAddIn::pictureRotate(const variant_t& baseString, const varian
     return new_base_string;
 }
 
+std::string SampleAddIn::pictureFlip(const variant_t& baseString)
+{
+    auto base_string = std::get<std::string>(baseString);
+    Magick::Blob objectBlob;
+    objectBlob.base64(base_string);
+    Magick::Image image;
+    image.read(objectBlob);
+    image.flip();
+    image.write(&objectBlob);
+    std::string new_base_string;
+    new_base_string = objectBlob.base64();
+    return new_base_string;
+}
+
+std::string SampleAddIn::pictureFlop(const variant_t& baseString)
+{
+    auto base_string = std::get<std::string>(baseString);
+    Magick::Blob objectBlob;
+    objectBlob.base64(base_string);
+    Magick::Image image;
+    image.read(objectBlob);
+    image.flop();
+    image.write(&objectBlob);
+    std::string new_base_string;
+    new_base_string = objectBlob.base64();
+    return new_base_string;
+}
+
 std::string SampleAddIn::pictureEnhance(const variant_t& baseString)
 {
     auto base_string = std::get<std::string>(baseString);
@@ -106,18 +140,31 @@ std::string SampleAddIn::pictureEnhance(const variant_t& baseString)
     return new_base_string;
 }
 
-std::string SampleAddIn::pictureOil(const variant_t& baseString, const variant_t& incomingRadius, const variant_t& incomingSigma)
+std::string SampleAddIn::pictureSharpen(const variant_t& baseString)
 {
     auto base_string = std::get<std::string>(baseString);
-    auto radius = std::get<std::double_t>(incomingRadius);
-    auto sigma = std::get<std::double_t>(incomingSigma);
     Magick::Blob objectBlob;
     objectBlob.base64(base_string);
     Magick::Image image;
     image.read(objectBlob);
-    image.oilPaint(radius, sigma);
+    image.sharpen();
     image.write(&objectBlob);
     std::string new_base_string;
     new_base_string = objectBlob.base64();
     return new_base_string;
 }
+
+std::string SampleAddIn::pictureOil(const variant_t& baseString)
+{
+    auto base_string = std::get<std::string>(baseString);
+    Magick::Blob objectBlob;
+    objectBlob.base64(base_string);
+    Magick::Image image;
+    image.read(objectBlob);
+    image.oilPaint();
+    image.write(&objectBlob);
+    std::string new_base_string;
+    new_base_string = objectBlob.base64();
+    return new_base_string;
+}
+

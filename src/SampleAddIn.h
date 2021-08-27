@@ -68,7 +68,14 @@ private:
 
     std::string pictureEnhance(const variant_t& baseString);
 
-    std::string pictureOil(const variant_t& baseString, const variant_t& incomingRadius, const variant_t& incomingSigma);
+    std::string pictureFlip(const variant_t& baseString);
+
+    std::string pictureFlop(const variant_t& baseString);
+
+    std::string pictureSharpen(const variant_t& baseString);
+
+    std::string pictureOil(const variant_t& baseString);
+
 };
 
 #endif //SAMPLEADDIN_H

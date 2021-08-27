@@ -49,6 +49,12 @@ SampleAddIn::SampleAddIn() {
     // Lambdas as method handlers are not supported.
 
     AddMethod(L"AutoOrient", L"АвтоОриент", this, &SampleAddIn::AutoOrient);
+    
+    AddMethod(L"Rotate", L"Повернуть", this, &SampleAddIn::pictureRotate);
+
+    AddMethod(L"Enhance", L"Улучшить", this, &SampleAddIn::pictureEnhance);
+
+    AddMethod(L"Oil", L"Масло", this, &SampleAddIn::pictureOil);
 
     // Method registration with default arguments
     //
@@ -69,4 +75,49 @@ void SampleAddIn::AutoOrient(const variant_t &picture_path)
     image.read(pic_path);
     image.autoOrient();
     image.write(pic_path);
+}
+
+std::string SampleAddIn::pictureRotate(const variant_t& baseString, const variant_t& incomingAngle)
+{
+    auto base_string = std::get<std::string>(baseString);
+    auto angle = std::get<int32_t>(incomingAngle);
+    Magick::Blob objectBlob;
+    objectBlob.base64(base_string);
+    Magick::Image image;
+    image.read(objectBlob);
+    image.rotate(angle);
+    image.write(&objectBlob);
+    std::string new_base_string;
+    new_base_string = objectBlob.base64();
+    return new_base_string;
+}
+
+std::string SampleAddIn::pictureEnhance(const variant_t& baseString)
+{
+    auto base_string = std::get<std::string>(baseString);
+    Magick::Blob objectBlob;
+    objectBlob.base64(base_string);
+    Magick::Image image;
+    image.read(objectBlob);
+    image.enhance();
+    image.write(&objectBlob);
+    std::string new_base_string;
+    new_base_string = objectBlob.base64();
+    return new_base_string;
+}
+
+std::string SampleAddIn::pictureOil(const variant_t& baseString, const variant_t& incomingRadius, const variant_t& incomingSigma)
+{
+    auto base_string = std::get<std::string>(baseString);
+    auto radius = std::get<std::double_t>(incomingRadius);
+    auto sigma = std::get<std::double_t>(incomingSigma);
+    Magick::Blob objectBlob;
+    objectBlob.base64(base_string);
+    Magick::Image image;
+    image.read(objectBlob);
+    image.oilPaint(radius, sigma);
+    image.write(&objectBlob);
+    std::string new_base_string;
+    new_base_string = objectBlob.base64();
+    return new_base_string;
 }

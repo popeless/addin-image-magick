@@ -62,7 +62,13 @@ private:
 
     std::shared_ptr<variant_t> sample_property;
 
-    void AutoOrient(const variant_t &picture_path);
+    void AutoOrient(const variant_t& picture_path);
+
+    std::string pictureRotate(const variant_t& baseString, const variant_t& incomingAngle);
+
+    std::string pictureEnhance(const variant_t& baseString);
+
+    std::string pictureOil(const variant_t& baseString, const variant_t& incomingRadius, const variant_t& incomingSigma);
 };
 
 #endif //SAMPLEADDIN_H
